@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{% for ticket in tickets %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ ticket.title }}</a>
+            <small class="text-muted">{{ ticket.owner }}</small>
+        </div>
+        <h2><a class="article-title" href="#">{{ ticket.title }}</a></h2>
+        <p class="article-content">{{ ticket.description }}</p>
+    </div>
+</article>
+{% endfor %}
+{% endblock content %}
