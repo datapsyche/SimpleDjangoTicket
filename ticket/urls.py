@@ -7,8 +7,7 @@ urlpatterns = [
     # path('addticket', views.addticket, name="addticket"),
     # path('adddepartment', views.adddepartment, name="adddepartment"),
     # path('addfollowup', views.addfollowup, name="addfollowup"),
-    path('addmarriagecertificate', views.addmarriagecertificate,
-         name="addmarriagecertificate"),
-    path('addbirthcertificate', views.addbirthcertificate,
-         name="addbirthcertificate")
+    path('addmarriagecertificate', views.addmarriagecertificate, name="addmarriagecertificate"),
+    path('addbirthcertificate', views.addbirthcertificate, name="addbirthcertificate"),
+    path('ticket/<int:num>/', views.ticketinfo, name="showticketinfo"),
 ]

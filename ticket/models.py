@@ -17,26 +17,26 @@ STATUS_CHOICES = (
 class Category(models.Model):
     name = models.CharField('category', max_length=255)
     subcategory = models.CharField('subcategory', max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return f"<Category : {self.name} - {self.subcategory}>"
     
 class ServiceRequest(models.Model):
     owner = models.ForeignKey(allUser, related_name='owner', blank=True, null=True, verbose_name='Owner', on_delete=models.DO_NOTHING)
-    description = models.TextField('description', blank=True, null=True)
+    description = models.CharField('description', blank=True, null=True, max_length=255)
     category = models.ForeignKey(Category, related_name="category", blank=True, null=True, on_delete=models.DO_NOTHING)
     status = models.CharField('Status', choices=STATUS_CHOICES,
                               max_length=255, blank=True, null=True, default="IN QUEUE")
-    waiting_for = models.ForeignKey(allUser, related_name='waiting_for', blank=True,
-                                    null=True, verbose_name='Waiting For', on_delete=models.DO_NOTHING)
     closed_date = models.DateTimeField(blank=True, null=True)
     assigned_to = models.ForeignKey(allUser, related_name='assigned_to', blank=True,
                                     null=True, verbose_name='Assigned to', on_delete=models.DO_NOTHING)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     duedate = models.DateTimeField(null=True, blank=True)
-    extra = models.CharField('extra', max_length=1024, null=True, blank=True)
+    extra = models.TextField('extra', null=True, blank=True)
     
-
-    def __unicode__(self):
-        return str(self.id)
+    def _str_(self):
+        return f"<Service Request : {self.description} - {self.owner}>"
 
 
 class Comment(models.Model):

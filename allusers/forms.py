@@ -16,5 +16,5 @@ class EmployeeRegisterForm(UserCreationForm):
 
     class Meta:
         model = allUser
-        fields = ['username', 'email', 'password1', 'password2', 'manager']
+        fields = ['username', 'email', 'password1', 'password2']
 

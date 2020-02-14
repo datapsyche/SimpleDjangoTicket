@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+{% if service_request %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ service_request.title }}</a>
+            <small class="text-muted">{{ service_request.owner }}</small>
+        </div>
+        <h2><a class="article-title" href="#">{{ service_request.description }}</a></h2>
+        <p class="article-content">{{ service_request.extra }}</p>
+    </div>
+</article>
+{% else %}
+<article class="media content-section">
+    <div class="media-body">
+        <small> {{ message }} </small>
+    </div>
+</article>
+{% endif %}
+{% endblock content %}

@@ -3,15 +3,13 @@ from .models import Category, ServiceRequest, Comment
 from django.contrib.auth.models import Group
 
 # # Register your models here.
-
-
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'subcategory')
     ordering = ('name',)
     search_fields = ('name',)
 
 class ServiceRequestAdmin(admin.ModelAdmin):
-    list_display = ('description', 'category', 'status', 'waiting_for', 'extra')
+    list_display = ('description', 'category', 'status','assigned_to','extra')
     ordering = ('created','updated')
     search_fields = ('extra',)
 
