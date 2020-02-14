@@ -25,7 +25,7 @@ class allUser(AbstractBaseUser, PermissionsMixin):
     role = models.CharField(max_length=50, choices=ROLES, default='PUBLIC')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username', ]
 
     objects = UserManager()
 

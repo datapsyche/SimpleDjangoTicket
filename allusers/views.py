@@ -22,6 +22,7 @@ def new_employee(request):
     if request.method == 'POST':
         form = EmployeeRegisterForm(request.POST)
         if form.is_valid():
+            form.cleaned_data['role']='EMPLOYEE'
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(

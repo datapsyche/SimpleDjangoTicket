@@ -1,19 +1,44 @@
-from django.forms import ModelForm
-from ticket.models import Ticket, FollowUp, Department
+from django.forms import ModelForm, Form, CharField, ChoiceField, DateField, FileField, ImageField, IntegerField
+
+from ticket.models import Category, ServiceRequest, Comment
+from django.conf import settings
+
+class MarriageCertificateForm(Form):
+    bride_name = CharField(label="Name of Bride", required=True)
+    groom_name = CharField(label="Name of Groom", required=True)
+    bride_aadhar_no = IntegerField(label="Aadhar Card of Bride", required=True)
+    groom_aadhar_no = IntegerField(label="Aadhar Card of Groom", required=True)
+    bride_address = CharField(label="Full Address of Bride", required=True)
+    groom_address = CharField(label="Full Address of Groom", required=True)
+    marriage_date = DateField(
+        label="Date of Marriage", required=True, input_formats=getattr(settings, 'DATE_INPUT_FORMATS'))
+    venue = CharField(label="Venue of Marriage", required=True)
 
 
-class TicketForm(ModelForm):
-    class Meta:
-        model = Ticket
-        fields = ['title', 'description']
+class BirthCertificateForm(Form):
+    child_name = CharField(label="Name of Child", required=True)
+    child_gender = ChoiceField(label="Gender", choices=(('MALE','MALE'),('FEMALE','FEMALE')))
+    place_of_birth = CharField(label="Place of Birth", required=True)
+    date_of_birth = DateField(
+        label="Date of Birth", required=True, input_formats=getattr(settings, 'DATE_INPUT_FORMATS'))
+    hospital_name = CharField(label="Hospital Name", required=True)
+    birth_reg_number = IntegerField(label="Hospital Birth Registration Number", required=True)
 
-class FollowUpForm(ModelForm):
-    class Meta:
-        model = FollowUp
-        fields = ['ticket', 'date', 'title',
-                  'text', 'user']
 
-class DepartmentForm(ModelForm):
-    class Meta:
-        model = Department
-        fields = ['name', 'subdepartment']
+# class ServiceRequestForm(ModelForm):
+#     class Meta:
+#         model = ServiceRequest
+#         fields = ['description', 'category', 'title',
+#                   'text', 'user']
+
+# class DepartmentForm(ModelForm):
+#     class Meta:
+#         model = Category
+#         fields = ['name', 'subdepartment']
+
+# class CommentForm(ModelForm):
+#     class Meta:
+#         model = Comment
+#         fields = ['title', 'text']
+
+

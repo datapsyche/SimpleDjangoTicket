@@ -44,6 +44,10 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'allusers.allUser'
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
