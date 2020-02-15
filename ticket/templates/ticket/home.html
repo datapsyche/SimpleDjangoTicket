@@ -1,15 +1,38 @@
 {% extends "base.html" %}
+{% load mathfilters %}
 {% block content %}
+<div class="container col-sm-12">
+
+<div class="row">
 {% for service_request in service_requests %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="#">{{ service_request.title }}</a>
-            <small class="text-muted">{{ service_request.owner }}</small>
+        <div class="col-sm-6">
+            <div class="card m-2">
+                <div class="card-header text-center">
+                    <h5><span class="badge badge-pill badge-warning">Request Id : {{ service_request.id }}</span> {{ service_request.description }}</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">Current Status : {{service_request.status}}</h5>
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">Field Name </th>
+                                <th scope="col">Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for key, value in service_request.data.items %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td>{{ value }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                     <a href="/ticket/{{ service_request.id }}/" class="btn btn-outline-primary" role="button">Action Service Request</a>
+                </div>
+            </div>
         </div>
-        <h2><a class="article-title" href="#">{{ service_request.description }}</a></h2>
-        <p class="article-content">{{ service_request.extra }}</p>
-    </div>
-</article>
 {% endfor %}
+</div>
+</div>
 {% endblock content %}

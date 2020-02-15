@@ -33,3 +33,16 @@ class allUser(AbstractBaseUser, PermissionsMixin):
         return f"<User : {self.first_name} {self.last_name}>"
 
 
+class Announcement(models.Model):
+    text = models.CharField('announcement', max_length=255)
+
+    def __str__(self):
+        return f"<Announcement : {self.text}>"
+
+
+class LeaveOfficer(models.Model):
+    officer_on_leave = models.ForeignKey(allUser, null=True, related_name="officer_leave", on_delete=models.DO_NOTHING, blank=True)
+
+    def __str__(self):
+        return f"{self.officer_on_leave.username }"
+

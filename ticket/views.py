@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from ticket.models import ServiceRequest
+from allusers.models import Announcement, LeaveOfficer
 from ticket.forms import  MarriageCertificateForm, BirthCertificateForm, ServiceRequestForm
 from django.contrib import messages
 import json
@@ -13,13 +14,22 @@ def home(request):
             service_requests = ServiceRequest.objects.filter(owner=request.user)
         else:
             service_requests = ServiceRequest.objects.filter(assigned_to=request.user)
+        
+        for service_request in service_requests:
+            setattr(service_request, 'data', json.loads(service_request.extra))      
+
         context = {
-            'service_requests': service_requests
+            'service_requests': service_requests,
+            'announcements' : Announcement.objects.all(),
+            'leave_officers': LeaveOfficer.objects.all()
         }
     else:
         messages.warning(
             request, f'You donot have the permission to view the content, Please login to the system')
-        context={}
+        context={
+            'announcements': Announcement.objects.all(),
+            'leave_officers': LeaveOfficer.objects.all()
+        }
     return render(request, 'ticket/home.html', context)
 
 
@@ -27,7 +37,8 @@ def ticketinfo(request, num):
     if request.user.is_authenticated:
         service_request_object = get_object_or_404(ServiceRequest, pk=num)
         if request.user.role == 'PUBLIC':
-            context = {'service_request': service_request_object}
+            setattr(service_request_object, 'data',json.loads(service_request_object.extra))
+            context = { 'service_request': service_request_object }
             return render(request, 'ticket/item.html', context=context)
         else:
             form = ServiceRequestForm(request.POST or None, instance=service_request_object)
@@ -63,7 +74,7 @@ def addbirthcertificate(request):
         if form.is_valid():
             form.cleaned_data['date_of_birth'] = str(
                 form.cleaned_data['date_of_birth'])
-            service_request_json = json.dumps(form.cleaned_data)
+            service_request_json = json.dumps(form.cleaned_data.__dict__)
             service_request_object = ServiceRequest(
                 owner=request.user, description="Birth Certificate", extra=service_request_json)
             service_request_object.save()

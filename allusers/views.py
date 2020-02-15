@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import UserRegisterForm, EmployeeRegisterForm
-
+from .forms import UserRegisterForm, EmployeeRegisterForm, AnnouncementForm, LeaveOfficerForm
 from allusers.models import allUser
 
 def register(request):
@@ -34,5 +33,30 @@ def new_employee(request):
     else:
         form = EmployeeRegisterForm()
     return render(request, 'alluser/register.html', {'form': form})
+
+def new_announcement(request):
+    if request.method == 'POST':
+        form = AnnouncementForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, f'New Announcement Added, It will be visible in Side Panel')
+            return redirect('home')
+    else:
+        form = AnnouncementForm()
+    return render(request, 'alluser/addannouncement.html', {'form': form})
+
+
+def new_leaveofficer(request):
+    if request.method == 'POST':
+        form = LeaveOfficerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request, f'Officer on Leave added to Side Panel')
+            return redirect('home')
+    else:
+        form = LeaveOfficerForm()
+    return render(request, 'alluser/addleaveofficer.html', {'form': form})
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import allUser
+from .models import allUser, Announcement, LeaveOfficer
 from django.contrib.auth.models import Group
 
 
@@ -12,4 +12,6 @@ class allUserAdmin(admin.ModelAdmin):
 
 admin.site.unregister(Group)
 admin.site.register(allUser, allUserAdmin)
+admin.site.register(Announcement)
+admin.site.register(LeaveOfficer)
 

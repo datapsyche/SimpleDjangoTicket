@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ticket',
     'allusers',
-    'crispy_forms'
+    'crispy_forms',
+    'mathfilters'
 ]
 
 AUTH_USER_MODEL = 'allusers.allUser'

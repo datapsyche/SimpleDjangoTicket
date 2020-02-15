@@ -1,21 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
-{% if service_request %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="#">{{ service_request.title }}</a>
-            <small class="text-muted">{{ service_request.owner }}</small>
+<div class="container">
+<div class="col ml-4 mr-4">
+    <div class="card m-2">
+        <div class="card-header">
+            <h5><span class="badge badge-pill badge-warning">Request Id : {{ service_request.id }}</span>
+                {{ service_request.description }}</h5>
         </div>
-        <h2><a class="article-title" href="#">{{ service_request.description }}</a></h2>
-        <p class="article-content">{{ service_request.extra }}</p>
+        <div class="card-body">
+            <div class="card border-light mb-3">
+                <h5><div class="card-header bg-success text-light">Service Request Processing Status</div></h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm"><p class="card-text">Requester : {{ service_request.owner }}</p></div>
+                        <div class="col-sm"><p class="card-text">Description : {{ service_request.description }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"><p class="card-text">Category : {{ service_request.category.name }}</p></div>
+                        <div class="col-sm"><p class="card-text">Subcategory : {{ service_request.category.subcategory }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"><p class="card-text">Status : {{ service_request.status }}</p></div>
+                        <div class="col-sm"><p class="card-text">Close Date : {{ service_request.closed_date }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"><p class="card-text">Assigened to : {{ service_request.assigned_to }}</p></div>
+                        <div class="col-sm"><p class="card-text">Created On :  {{ service_request.created }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm"><p class="card-text">Due Date: {{ service_request.duedate }}</p></div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Field Name </th>
+                        <th scope="col">Data Entered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, value in service_request.data.items %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if user.is_public ==  False %}
+            <a href="/ticket/{{ service_request.id }}/" class="btn btn-outline-primary" role="button">Action Service
+                Request</a>
+            {% endif %}
+        </div>
     </div>
-</article>
-{% else %}
-<article class="media content-section">
-    <div class="media-body">
-        <small> {{ message }} </small>
-    </div>
-</article>
-{% endif %}
+</div>
+</div>
 {% endblock content %}

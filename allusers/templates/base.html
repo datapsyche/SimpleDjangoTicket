@@ -1,69 +1,62 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-
 <head>
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">   
 
     <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
 
-    {% if title %}
-    <title>Django Ticket {{ title }}</title>
-    {% else %}
-    <title>CTSS</title>
-    {% endif %}
+    <title>Centralized Transparent Service System</title>
 </head>
 
 <body>
     <header class="site-header">
-        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
             <div class="container">
-                <a class="navbar-brand mr-4" href="{% url 'home' %}">CTSS</a>
+                <a class="navbar-brand mr-4" href="{% url 'home' %}">Centralized Transparent Service System</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-                    </div>
-                    <div class="navbar-nav">
+                    <div class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle btn btn-outline-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 Create New Request
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/addbirthcertificate">New Birth Certicate</a>
-                                <a class="dropdown-item" href="/addmarriagecertificate">New Marriage Certicate</a>                                
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" href="/addmarriagecertificate">New Marriage Certicate</a>                            
+                                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
                             </div>
                         </li>
                     </div>
                     <!-- Navbar Right Side -->
-                    <div class="navbar-nav">
+                    <div class="navbar-nav ml-auto">
                         {% if user.is_authenticated %}                      
                         <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                        <a class="nav-item nav-link" href="#">{{ request.user.email }}</a>
+                        <a class="nav-item nav-link" href="#"> {{ request.user.email }}</a>
                         {% else %}
                         <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
                         <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
                         {% endif %}
                     </div>
                 </div>
-            </div>
+            </div>            
         </nav>
     </header>
     <main role="main" class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-9">
                 {% if messages %}
                 {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -71,23 +64,33 @@
                 </div>
                 {% endfor %}
                 {% endif %}
-                {% block content %}{% endblock %}
+                {% block content %}
+                
+                {% endblock %}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="content-section">
-                    <h3>Updates</h3>
-                    <p class='text-muted'>Latest Announcements from CTSS
-                        <ul class="list-group">
-                            <li class="list-group-item list-group-item-light">CTSS infosystem Launched .. </li>
-                            <li class="list-group-item list-group-item-light">Watch the youtube to know how to use CTSS</li>
-                            <li class="list-group-item list-group-item-light">Know more on how to request a service from CTSS</li>
+                    <h3>Announcements</h3>
+                    <p class='text-muted'> Latest updates from CTSS Infosystem</p>
+                        <ul class="list-group list-group-flush">
+                        {% if user.role == 'ADMIN'%}
+                                <a href="/newannouncement/"><button type="button" class="btn btn-outline-primary mb-1" >Add Announcement</button></a>
+                        {% endif %}
+                        {% for announcement in announcements %}
+                            <li class="list-group-item list-group-item-info m-1">{{ announcement.text }} </li>
+                        {% endfor %}
                         </ul>
-                        <ul class="list-group">
-                            <br>
-                            <h5>Officers on Leave</h5>
-                            <li class="list-group-item list-group-item-light">Officer 1</li>
-                            <li class="list-group-item list-group-item-light">Officer 2</li>
-                            <li class="list-group-item list-group-item-light">Admin 1</li>
+                </div>
+                <div class="content-section">
+                    <h3>Officers on Leave</h3>
+                    <p class='text-muted'> Below Officers are on leave Today</p>
+                        <ul class="list-group list-group-flush">    
+                        {% if user.role == 'ADMIN'%}
+                            <a href="/newleaveofficer/"><button type="button" class="btn btn-outline-primary mb-1">Add Officer On Leave</button></a>
+                        {% endif %}
+                        {% for officer in leave_officers %}
+                            <li class="list-group-item list-group-item-danger m-1">{{ officer }}</li>
+                        {% endfor %}
                         </ul>
                     </p>
                 </div>
