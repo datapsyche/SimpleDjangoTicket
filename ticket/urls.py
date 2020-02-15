@@ -10,4 +10,5 @@ urlpatterns = [
     path('addmarriagecertificate', views.addmarriagecertificate, name="addmarriagecertificate"),
     path('addbirthcertificate', views.addbirthcertificate, name="addbirthcertificate"),
     path('ticket/<int:num>/', views.ticketinfo, name="showticketinfo"),
+    path('search/', views.search, name='search'),
 ]

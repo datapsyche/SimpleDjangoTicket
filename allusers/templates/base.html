@@ -70,6 +70,12 @@
             </div>
             <div class="col-md-3">
                 <div class="content-section">
+                    <h3>Search </h3>
+                    <form action="{% url 'search' %}" method="get">
+                        <input name="q" type="number" placeholder="Enter Service Request Id...">
+                    </form>
+                </div>
+                <div class="content-section">
                     <h3>Announcements</h3>
                     <p class='text-muted'> Latest updates from CTSS Infosystem</p>
                         <ul class="list-group list-group-flush">

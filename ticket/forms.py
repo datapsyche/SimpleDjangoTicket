@@ -26,16 +26,11 @@ class ServiceRequestForm(ModelForm):
     class Meta:
         model = ServiceRequest
         fields = ['description', 'status', 'category',
-                'closed_date', 'assigned_to','extra']
+                'closed_date',]
 
-# class DepartmentForm(ModelForm):
-#     class Meta:
-#         model = Category
-#         fields = ['name', 'subdepartment']
-
-# class CommentForm(ModelForm):
-#     class Meta:
-#         model = Comment
-#         fields = ['title', 'text']
-
+class ServiceReassignForm(ModelForm):
+    class Meta:
+        model = ServiceRequest
+        fields = ['description', 'status', 'category',
+                  'closed_date', 'assigned_to']
 
