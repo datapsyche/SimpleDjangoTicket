@@ -29,10 +29,12 @@
                 <div class="collapse navbar-collapse" id="navbarToggle">
                     <div class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
+                            {% if user.is_authenticated %}
                             <a class="nav-link dropdown-toggle btn btn-outline-info" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 Create New Request
                             </a>
+                            {% endif %}
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/addbirthcertificate">New Birth Certicate</a>
                                 <a class="dropdown-item" href="/addmarriagecertificate">New Marriage Certicate</a>                            
@@ -69,12 +71,14 @@
                 {% endblock %}
             </div>
             <div class="col-md-3">
+                {% if user.is_authenticated %}
                 <div class="content-section">
                     <h3>Search </h3>
                     <form action="{% url 'search' %}" method="get">
                         <input name="q" type="number" placeholder="Enter Service Request Id...">
                     </form>
                 </div>
+                {% endif %}
                 <div class="content-section">
                     <h3>Announcements</h3>
                     <p class='text-muted'> Latest updates from CTSS Infosystem</p>

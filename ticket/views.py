@@ -37,8 +37,8 @@ def home(request):
 def ticketinfo(request, num):
     if request.user.is_authenticated:
         service_request_object = get_object_or_404(ServiceRequest, pk=num)
+        setattr(service_request_object, 'data',json.loads(service_request_object.extra))
         if request.user.role == 'PUBLIC':
-            setattr(service_request_object, 'data',json.loads(service_request_object.extra))
             context = { 'service_request': service_request_object,
                         'announcements': Announcement.objects.all(),
                         'leave_officers': LeaveOfficer.objects.all()
@@ -62,9 +62,8 @@ def ticketinfo(request, num):
             if form.is_valid():
                 obj = form.save(commit=False)
                 obj.save()
-                messages.success(request, f'Service Request has been edited')
-                setattr(service_request_object, 'data', json.loads(service_request_object.extra))
-                context = {
+                messages.success(request, f'Service Request has been edited')                
+            context = {
                 'form': form,
                 'service_request': service_request_object,
                 'announcements': Announcement.objects.all(),
