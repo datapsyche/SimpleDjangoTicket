@@ -31,6 +31,6 @@ class ServiceRequestForm(ModelForm):
 class ServiceReassignForm(ModelForm):
     class Meta:
         model = ServiceRequest
-        fields = ['description', 'status', 'category',
-                  'closed_date', 'assigned_to']
+        fields = ['owner', 'description', 'status', 'category',
+                  'closed_date', 'assigned_to', 'duedate']
 

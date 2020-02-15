@@ -133,6 +133,7 @@ def search(request):
 
 def escalate(request, pk):
     service_request = get_object_or_404(ServiceRequest, pk=pk)
+    setattr(service_request, 'data', json.loads(service_request.extra))
     service_request.status = "ESCALATE"
     service_request.save()
     context = {
