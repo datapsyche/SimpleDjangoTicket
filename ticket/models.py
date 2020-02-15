@@ -11,7 +11,8 @@ STATUS_CHOICES = (
     ('REJECTED', 'REJECTED'),
     ('APPROVED', 'APPROVED'),
     ('TRANSFERED', 'TRANSFERED'),
-    ('ADDITIONAL INFO', 'ADDITIONAL INFO')
+    ('ADDITIONAL INFO', 'ADDITIONAL INFO'),
+    ('ESCALATE', 'ESCALATE'),
 )
 
 class Category(models.Model):

@@ -11,4 +11,5 @@ urlpatterns = [
     path('addbirthcertificate', views.addbirthcertificate, name="addbirthcertificate"),
     path('ticket/<int:num>/', views.ticketinfo, name="showticketinfo"),
     path('search/', views.search, name='search'),
+    path('ticket/<int:pk>/escalate/', views.escalate, name="escalate"),
 ]

@@ -49,8 +49,15 @@
                 </tbody>
             </table>
             {% if user.is_public ==  False %}
-            <a href="/ticket/{{ service_request.id }}/" class="btn btn-outline-primary" role="button">Action Service
-                Request</a>
+                <a href="/ticket/{{ service_request.id }}/" class="btn btn-outline-primary" role="button">View Details</a>
+            {% else %}
+                {% if service_request.duedate < now %}
+                    <p> </p>                    
+                {% else %} 
+                    {% if service_request.status != "ESCALATE"%}                   
+                    <a href="/ticket/{{ service_request.id }}/escalate/" class="btn btn-outline-primary" role="button">ESCALATE</a>
+                    {% endif %}
+                {% endif %}        
             {% endif %}
         </div>
     </div>

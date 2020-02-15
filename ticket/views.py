@@ -130,3 +130,14 @@ def search(request):
         'service_request': service_request
     }
     return render(request, 'ticket/item.html', context)
+
+def escalate(request, pk):
+    service_request = get_object_or_404(ServiceRequest, pk=pk)
+    service_request.status = "ESCALATE"
+    service_request.save()
+    context = {
+        'service_request': service_request
+    }
+    return render(request, 'ticket/item.html', context)
+
+
