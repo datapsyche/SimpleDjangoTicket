@@ -38,11 +38,12 @@ def ticketinfo(request, num):
     if request.user.is_authenticated:
         service_request_object = get_object_or_404(ServiceRequest, pk=num)
         setattr(service_request_object, 'data',json.loads(service_request_object.extra))
+        context = {
+            'service_request': service_request_object,
+            'announcements': Announcement.objects.all(),
+            'leave_officers': LeaveOfficer.objects.all()
+        }
         if request.user.role == 'PUBLIC':
-            context = { 'service_request': service_request_object,
-                        'announcements': Announcement.objects.all(),
-                        'leave_officers': LeaveOfficer.objects.all()
-                        }
             return render(request, 'ticket/item.html', context=context)
         elif request.user.role == 'EMPLOYEE':
             form = ServiceRequestForm(request.POST or None, instance=service_request_object)
@@ -50,12 +51,7 @@ def ticketinfo(request, num):
                 obj = form.save(commit=False)
                 obj.save()
                 messages.success(request, f'Service Request has been edited')
-            context = {
-                'form': form,
-                'service_request' : service_request_object,
-                'announcements': Announcement.objects.all(),
-                'leave_officers': LeaveOfficer.objects.all()
-                }
+            context['form'] = form            
             return render(request, 'ticket/edit.html', context=context)
         else:
             form = ServiceReassignForm(request.POST or None, instance=service_request_object)
@@ -63,17 +59,12 @@ def ticketinfo(request, num):
                 obj = form.save(commit=False)
                 obj.save()
                 messages.success(request, f'Service Request has been edited')                
-            context = {
-                'form': form,
-                'service_request': service_request_object,
-                'announcements': Announcement.objects.all(),
-                'leave_officers': LeaveOfficer.objects.all()
-            }
+            context['form'] = form
             return render(request, 'ticket/edit.html', context=context)
 
     else:
         messages.warning(request, f'You donot have the permission to view the request')
-        return render(request, 'ticket/edit.html', context={})
+        return render(request, 'ticket/edit.html', context=context)
 
 def addmarriagecertificate(request):
     if request.method == 'POST':
